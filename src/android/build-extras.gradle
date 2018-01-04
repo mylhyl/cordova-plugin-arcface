@@ -1,0 +1,2 @@
+ext.cdvBuildMultipleApks = true;
+ext.cdvBuildArch='arm'

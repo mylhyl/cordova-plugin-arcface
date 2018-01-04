@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-arcface" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>Arc Face</name>
+	<description>Cordova Face Plugin,use arcsoft face SDK</description>
+	<license>Apache 2.0</license>
+	<engines>
+		<engine name="cordova-android" version=">=5.0.0"/>
+	</engines>
+	<js-module name="ArcFace" src="www/ArcFacePlugin.js">
+		<clobbers target="ArcFace"/>
+	</js-module>
+	<preference name="ANDROID_APP_ID" default=""/>
+	<preference name="ANDROID_SDK_FD_KEY" default=""/>
+	<preference name="ANDROID_SDK_FR_KEY" default=""/>
+	<preference name="Android_SDK_FT_KEY" default=""/>
+	<preference name="IOS_APP_ID" default=""/>
+	<preference name="IOS_SDK_FD_KEY" default=""/>
+	<preference name="IOS_SDK_FR_KEY" default=""/>
+	<preference name="IOS_SDK_FT_KEY" default=""/>
+	
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="ArcFacePlugin">
+				<param name="android-package" value="com.contron.cordova.arcface.ArcFacePlugin"/>
+			</feature>
+		</config-file>
+
+		<config-file parent="/*" target="AndroidManifest.xml">
+           	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+           	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+		 	<meta-data android:name="com.arcface.APP_ID" android:value="$ANDROID_APP_ID"/>
+		 	<meta-data android:name="com.arcface.facedetection.SDK_KEY" android:value="$ANDROID_SDK_FD_KEY"/>
+		 	<meta-data android:name="com.arcface.facerecognition.SDK_KEY" android:value="$ANDROID_SDK_FR_KEY"/>
+		 	<meta-data android:name="com.arcface.facetracking.SDK_KEY" android:value="$ANDROID_SDK_FT_KEY"/>
+		</config-file>
+
+		<source-file src="src/android/ArcFacePlugin.java" target-dir="src/com/contron/cordova/arcface"/>
+		<source-file src="src/android/utils/ArcFaceUtils.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ThreadUtil.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ImageUtil.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/FileUtil.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ArcFaceThread.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ArcFaceListener.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ArcFaceErrorCode.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ArcFaceException.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ArcFaceHandler.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/PendingRequests.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+		<source-file src="src/android/utils/ErrorMessage.java" target-dir="src/com/contron/cordova/arcface/utils"/>
+
+		<source-file src="src/android/db/IDaoBasicDao.java" target-dir="src/com/contron/cordova/arcface/db"/>
+		<source-file src="src/android/db/IFaceDao.java" target-dir="src/com/contron/cordova/arcface/db"/>
+		<source-file src="src/android/db/dao/BasicDao.java" target-dir="src/com/contron/cordova/arcface/db/dao"/>
+		<source-file src="src/android/db/dao/DbHelper.java" target-dir="src/com/contron/cordova/arcface/db/dao"/>
+		<source-file src="src/android/db/dao/FaceDao.java" target-dir="src/com/contron/cordova/arcface/db/dao"/>
+		<source-file src="src/android/bean/FaceEntity.java" target-dir="src/com/contron/cordova/arcface/bean"/>
+
+		<source-file src="src/android/zip/IZip.java" target-dir="src/com/contron/cordova/arcface/zip"/>
+		<source-file src="src/android/zip/DefaultZip.java" target-dir="src/com/contron/cordova/arcface/zip"/>
+		<source-file src="src/android/zip/ZipFactory.java" target-dir="src/com/contron/cordova/arcface/zip"/>
+		<source-file src="src/android/zip/SevenZip.java" target-dir="src/com/contron/cordova/arcface/zip"/>
+		
+		<source-file src="libs/android/facedetection.jar" target-dir="libs"/>
+		<source-file src="libs/android/facerecognition.jar" target-dir="libs"/>
+		<source-file src="libs/android/facetracking.jar" target-dir="libs"/>
+		<source-file src="libs/android/commons-compress.jar" target-dir="libs"/>
+		<source-file src="libs/android/xz.jar" target-dir="libs"/>
+		<source-file src="libs/android/armeabi/libArcSoft_FDEngine.so" target-dir="libs/armeabi"/>
+		<source-file src="libs/android/armeabi/libArcSoft_FREngine.so" target-dir="libs/armeabi"/>
+		<source-file src="libs/android/armeabi/libArcSoft_FTEngine.so" target-dir="libs/armeabi"/>
+		<source-file src="libs/android/armeabi/libmpbase.so" target-dir="libs/armeabi"/>
+		<source-file src="libs/android/armeabi-v7a/libArcSoft_FDEngine.so" target-dir="libs/armeabi-v7a"/>
+		<source-file src="libs/android/armeabi-v7a/libArcSoft_FREngine.so" target-dir="libs/armeabi-v7a"/>
+		<source-file src="libs/android/armeabi-v7a/libArcSoft_FTEngine.so" target-dir="libs/armeabi-v7a"/>
+		<source-file src="libs/android/armeabi-v7a/libmpbase.so" target-dir="libs/armeabi-v7a"/>
+
+
+	</platform>
+
+
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="ArcFacePlugin">
+				<param name="ios-package" value="ArcFacePlugin"/>
+			</feature>
+		</config-file>
+		<!--为了能够在iOS9中正常使用非HTTPS协议-->
+		<config-file parent="NSAppTransportSecurity" target="*-Info.plist">
+			<dict>
+				<key>NSAllowsArbitraryLoads</key>
+				<true/>
+			</dict>
+		</config-file>
+		<config-file parent="ArcFacePlugin" target="*-Info.plist">
+			<dict>
+				<key>APP_ID</key>
+				<string>$IOS_APP_ID</string>
+				<key>FD_KEY</key>
+				<string>$IOS_SDK_FD_KEY</string>
+				<key>FR_KEY</key>
+				<string>$IOS_SDK_FR_KEY</string>
+				<key>FT_KEY</key>
+				<string>$IOS_SDK_FT_KEY</string>
+			</dict>
+		</config-file>
+
+		<source-file src="src/ios/ArcFacePlugin.mm"/>
+		<header-file src="src/ios/ArcSoftManager.h"/>
+		<source-file src="src/ios/ArcSoftManager.mm"/>
+		<header-file src="src/ios/common_utilitys.h"/>
+		<source-file src="src/ios/common_utilitys.mm"/>
+		<header-file src="src/ios/DatabaseManager.h"/>
+		<source-file src="src/ios/DatabaseManager.m"/>
+		<header-file src="src/ios/FaceEntity.h"/>
+		<source-file src="src/ios/FaceEntity.m"/>
+		<header-file src="src/ios/FaceModel.h"/>
+		<source-file src="src/ios/FaceModel.m"/>
+		
+		<!-- 第三方数据库 -->
+		<header-file src="libs/ios/fmdb/FMDatabase.h"/>
+		<source-file src="libs/ios/fmdb/FMDatabase.m"/>
+		<header-file src="libs/ios/fmdb/FMDatabaseAdditions.h"/>
+		<source-file src="libs/ios/fmdb/FMDatabaseAdditions.m"/>
+		<header-file src="libs/ios/fmdb/FMDatabasePool.h"/>
+		<source-file src="libs/ios/fmdb/FMDatabasePool.m"/>
+		<header-file src="libs/ios/fmdb/FMDatabaseQueue.h"/>
+		<source-file src="libs/ios/fmdb/FMDatabaseQueue.m"/>
+		<header-file src="libs/ios/fmdb/FMDB.h"/>
+		<header-file src="libs/ios/fmdb/FMResultSet.h"/>
+		<source-file src="libs/ios/fmdb/FMResultSet.m"/>
+
+		<header-file src="libs/ios/MJExtension/MJExtension.h"/>
+		<header-file src="libs/ios/MJExtension/MJExtensionConst.h"/>
+		<source-file src="libs/ios/MJExtension/MJExtensionConst.m"/>
+		<header-file src="libs/ios/MJExtension/MJFoundation.h"/>
+		<source-file src="libs/ios/MJExtension/MJFoundation.m"/>
+		<header-file src="libs/ios/MJExtension/MJProperty.h"/>
+		<source-file src="libs/ios/MJExtension/MJProperty.m"/>
+		<header-file src="libs/ios/MJExtension/MJPropertyKey.h"/>
+		<source-file src="libs/ios/MJExtension/MJPropertyKey.m"/>
+		<header-file src="libs/ios/MJExtension/MJPropertyType.h"/>
+		<source-file src="libs/ios/MJExtension/MJPropertyType.m"/>
+		<header-file src="libs/ios/MJExtension/NSObject+MJClass.h"/>
+		<source-file src="libs/ios/MJExtension/NSObject+MJClass.m"/>
+		<header-file src="libs/ios/MJExtension/NSObject+MJCoding.h"/>
+		<source-file src="libs/ios/MJExtension/NSObject+MJCoding.m"/>
+		<header-file src="libs/ios/MJExtension/NSObject+MJKeyValue.h"/>
+		<source-file src="libs/ios/MJExtension/NSObject+MJKeyValue.m"/>
+		<header-file src="libs/ios/MJExtension/NSObject+MJProperty.h"/>
+		<source-file src="libs/ios/MJExtension/NSObject+MJProperty.m"/>
+		<header-file src="libs/ios/MJExtension/NSString+MJExtension.h"/>
+		<source-file src="libs/ios/MJExtension/NSString+MJExtension.m"/>
+
+		<header-file src="libs/ios/amcomdef.h"/>
+		<header-file src="libs/ios/ammem.h"/>
+		<header-file src="libs/ios/arcsoft_fsdk_face_detection.h"/>
+		<header-file src="libs/ios/arcsoft_fsdk_face_recognition.h"/>
+		<header-file src="libs/ios/arcsoft_fsdk_face_tracking.h"/>
+		<header-file src="libs/ios/asvloffscreen.h"/>
+		<header-file src="libs/ios/merror.h"/>
+
+		<framework src="libs/ios/arcsoft_face_base.a" custom="true"/>
+		<framework src="libs/ios/libarcsoft_fsdk_base.a" custom="true"/>
+		<framework src="libs/ios/libarcsoft_fsdk_face_detection.a" custom="true"/>
+		<framework src="libs/ios/libarcsoft_fsdk_face_recognition.a" custom="true"/>
+		<framework src="libs/ios/libarcsoft_fsdk_face_tracking.a" custom="true"/>
+		<framework src="libs/ios/libarcsoft_mobilecv.a" custom="true"/>
+		<framework src="libs/ios/libmpbase.a" custom="true"/>		
+		
+        <framework src="libs/ios/LzmaSDK_ObjC.framework" custom="true"/>
+
+		<framework src="libsqlite3.tbd"/>
+		<framework src="libstdc++.6.tbd"/>
+	</platform>
+</plugin>
