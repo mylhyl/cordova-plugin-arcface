@@ -75,6 +75,7 @@
 		<source-file src="libs/android/armeabi-v7a/libArcSoft_FTEngine.so" target-dir="libs/armeabi-v7a"/>
 		<source-file src="libs/android/armeabi-v7a/libmpbase.so" target-dir="libs/armeabi-v7a"/>
 
+		<source-file src="src/android/build-extras.gradle" target-dir="./"/>
 	</platform>
 
 

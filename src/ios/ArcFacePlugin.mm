@@ -68,17 +68,19 @@
         NSString *srcPath = [self pathForURL:srcPathURL];
         NSString *destDirectory = [self pathForURL:destDirectoryURL];
 
-        //初始化引擎
-        [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:nil];
-    
         NSError *error = nil;
-        BOOL res = [self.manager executeDataByZipFilePath:srcPath outputDirectory:destDirectory Error:&error];
-        if (!res) NSLog(@"%@",error);
+        //初始化引擎
+        BOOL res = [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:&error];
         if (res) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
-        } else {
+            res = [self.manager executeDataByZipFilePath:srcPath outputDirectory:destDirectory Error:&error];
+            if (res) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
+            }
+        } 
+        if (!res) {
+            NSLog(@"%@",error);
             NSMutableDictionary* dataError = [[NSMutableDictionary alloc] init];
-            [dataError setValue:[NSNumber numberWithInterger:error.code] forKey:@"code"];
+            [dataError setValue:[NSNumber numberWithInteger:error.code] forKey:@"code"];
             [dataError setValue:error.userInfo[NSLocalizedDescriptionKey] forKey:@"message"];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dataError];
         }
@@ -97,17 +99,20 @@
         NSString *image = [command.arguments objectAtIndex:0];
         int count = [[command.arguments objectAtIndex:1] intValue];
 
-        //初始化引擎
-        [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:nil];
-
         NSError *error = nil;
-        BOOL res = [self.manager searchFace:image Count:count Error:&error];
-        if(!error) NSLog(@"%@",error);
-        if(res){
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
-        }else{
+        //初始化引擎
+        BOOL res = [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:&error];
+        if (res) {            
+            res = [self.manager searchFace:image Count:count Error:&error];
+            if (res) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];                
+            }
+        }        
+        
+        if (!res) {
+            NSLog(@"%@",error);
             NSMutableDictionary* dataError = [[NSMutableDictionary alloc] init];
-            [dataError setValue:[NSNumber numberWithInterger:error.code] forKey:@"code"];
+            [dataError setValue:[NSNumber numberWithInteger:error.code] forKey:@"code"];
             [dataError setValue:error.userInfo[NSLocalizedDescriptionKey] forKey:@"message"];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dataError];
         }
@@ -123,20 +128,25 @@
         CDVPluginResult* pluginResult = nil;
         int userId = [[command.arguments objectAtIndex:0] intValue];
         int groupId = [[command.arguments objectAtIndex:1] intValue];
-        NSString *imagePath = [command.arguments objectAtIndex:2];
+        NSString *imagePathURL = [command.arguments objectAtIndex:2];
         NSString *remark = [command.arguments objectAtIndex:3];
-     
-        //初始化引擎
-        [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:nil];
-    
+
+        NSString *imagePath = [self pathForURL:imagePathURL];
+        
         NSError *error = nil;
-        BOOL res = [self.manager registerFaceUserId:userId GroupId:groupId ImagePath:imagePath Remark:remark Error:&error];
+        //初始化引擎
+        BOOL res = [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:&error];    
         if (res) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
-        } else {
+            res = [self.manager registerFaceUserId:userId GroupId:groupId ImagePath:imagePath Remark:remark Error:&error];
+            if (res) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
+            } 
+        }
+        
+        if (!res) {            
             NSLog(@"%@",error);
             NSMutableDictionary* dataError = [[NSMutableDictionary alloc] init];
-            [dataError setValue:[NSNumber numberWithInterger:error.code] forKey:@"code"];
+            [dataError setValue:[NSNumber numberWithInteger:error.code] forKey:@"code"];
             [dataError setValue:error.userInfo[NSLocalizedDescriptionKey] forKey:@"message"];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dataError];
         } 

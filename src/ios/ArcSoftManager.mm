@@ -21,10 +21,10 @@
 
 #import <LzmaSDK_ObjC/LzmaSDKObjC.h>
 
-#define AFR_APP_ID         "8wAFXwLyRJZv3FxdJAjCxC2zmGTQG6Sf62Py15AC45Nu"
-#define AFR_SDK_FR_KEY     "4uxSiocChgkwTY49NU46DkxS8fUmLrTzUyRNpsbvLMD8"
-#define AFR_SDK_FT_KEY     "4uxSiocChgkwTY49NU46DkwwV4S5L5D2iFzANVN1zxz1"
-#define AFR_SDK_FD_KEY     "4uxSiocChgkwTY49NU46Dkx4eThF5ZyN2Yfca5vNwESs"
+#define AFR_APP_ID         ""
+#define AFR_SDK_FR_KEY     ""
+#define AFR_SDK_FT_KEY     ""
+#define AFR_SDK_FD_KEY     ""
 
 #define AFR_FR_MEM_SIZE         1024*1024*40
 #define AFR_FT_MEM_SIZE         1024*1024*5
@@ -163,7 +163,9 @@ static ArcSoftManager *manager=nil;
     MRESULT res = AFT_FSDK_InitialFaceEngine((MPChar)[appId UTF8String], (MPChar)[ftKey UTF8String], (MByte*)_memBufferFT, AFR_FT_MEM_SIZE, &_arcsoftFT, AFT_FSDK_OPF_0_HIGHER_EXT, 16, AFR_FD_MAX_FACE_NUM);
     if(res!=MOK)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [MERR objectAtIndex:res]}];
+        NSArray *errorArr=[self getErrorArray:res];
+        MRESULT errorIndex=[self getErrorIndex:res];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [errorArr objectAtIndex:errorIndex]}];
         return NO;
     }
     // FD
@@ -172,7 +174,9 @@ static ArcSoftManager *manager=nil;
     res=AFD_FSDK_InitialFaceEngine((MPChar)[appId UTF8String], (MPChar)[fdKey UTF8String], (MByte*)_memBufferFD, AFR_FD_MEM_SIZE, &_arcsoftFD, AFD_FSDK_OPF_0_HIGHER_EXT, 16, AFR_FD_MAX_FACE_NUM);
     if(res!=MOK)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [MERR objectAtIndex:res]}];
+        NSArray *errorArr=[self getErrorArray:res];
+        MRESULT errorIndex=[self getErrorIndex:res];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [errorArr objectAtIndex:errorIndex]}];
         return NO;
     }
     // FR
@@ -181,7 +185,9 @@ static ArcSoftManager *manager=nil;
     res=AFR_FSDK_InitialEngine((MPChar)[appId UTF8String], (MPChar)[frKey UTF8String], (MByte*)_memBufferFR, AFR_FR_MEM_SIZE, &_arcsoftFR);
     if(res!=MOK)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [MERR objectAtIndex:res]}];
+        NSArray *errorArr=[self getErrorArray:res];
+        MRESULT errorIndex=[self getErrorIndex:res];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [errorArr objectAtIndex:errorIndex]}];
         return NO;
     }
     
@@ -259,7 +265,7 @@ static ArcSoftManager *manager=nil;
     }
     
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSString *sqlDirPath=[NSString stringWithFormat:@"%@/arcface/sql",directory];
+    NSString *sqlDirPath=[NSString stringWithFormat:@"%@arcface/sql",directory];
     NSArray *sqlArr=[fileManager contentsOfDirectoryAtPath:sqlDirPath error:nil];
     if(sqlArr.count==0)
     {
@@ -278,7 +284,7 @@ static ArcSoftManager *manager=nil;
 {
     NSError *createFaceError=nil;
     FaceModel *model=[self createFaceModelUserId:0 GroupId:0 PicName:@"" Remark:@"" Image:image Error:&createFaceError];
-    if(error) *error=[NSError errorWithDomain:createFaceError.domain code:createFaceError.code userInfo:createFaceError.userInfo];
+    if(error && createFaceError) *error=[NSError errorWithDomain:createFaceError.domain code:createFaceError.code userInfo:createFaceError.userInfo];
     
     NSArray *arr=[DbManager getAllFaceModel];
     if(arr.count==0)

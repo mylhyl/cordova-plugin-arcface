@@ -47,10 +47,10 @@ import java.util.List;
  * This class echoes a string called from JavaScript.
  */
 public class ArcFacePlugin extends CordovaPlugin {
-    public static String APP_ID = "8wAFXwLyRJZv3FxdJAjCxC28dTdEiNzVFrFsw1RmvrwR";
-    public static String SDK_FD_KEY = "C9v38or7a6j8K6k13nBzbvWNgDQBqfAXmZTehJRy9nDY";
-    public static String SDK_FR_KEY = "C9v38or7a6j8K6k13nBzbvWsKpSwXjaW3FXZ1RV81Wgg";
-    public static String SDK_FT_KEY = "C9v38or7a6j8K6k13nBzbvWFWp94HvskoVPa6QqQ3Bak";
+    public static String APP_ID = "";
+    public static String SDK_FD_KEY = "";
+    public static String SDK_FR_KEY = "";
+    public static String SDK_FT_KEY = "";
 
     private Context context;
 

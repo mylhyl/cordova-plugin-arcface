@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-arcface",
+  "version": "1.0.0",
+  "description": "Cordova Face Plugin,use arcsoft face SDK",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mylhyl/cordova-plugin-arcface.git"
+  },
+  "keywords": [
+    "cordova",
+    "arcsoft",    
+    "arcface",
+    "device",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "hupei",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mylhyl/cordova-plugin-arcface/issues"
+  },
+  "homepage": "https://github.com/mylhyl/cordova-plugin-arcface#readme"
+}
