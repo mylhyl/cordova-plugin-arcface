@@ -13,7 +13,6 @@
     "cordova",
     "arcsoft",    
     "arcface",
-    "device",
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios"
