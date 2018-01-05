@@ -346,7 +346,7 @@ public class ArcFacePlugin extends CordovaPlugin {
      * @param callbackContext
      */
     private void updateOrRegisterFace(int userId, int groupId, String imageData, String remarks, CallbackContext callbackContext) {
-        if (userId < 0 || groupId < 0 || (imageData != null && imageData.length() > 0)) {
+        if (userId < 0 || groupId < 0 || !(imageData != null && imageData.length() > 0)) {
             callbackContext.error(ErrorMessage.createErrorMessage(0x000b, "INVALID_PARAMETER"));
         } else {
             try {
