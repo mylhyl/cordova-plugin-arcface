@@ -58,7 +58,7 @@ public class FaceDao extends BasicDao implements IFaceDao {
                 FaceEntity.COLUMN_NAME_CREATE_TIME,
                 FaceEntity.COLUMN_NAME_UPDATE_TIME
         };
-        String selection = FaceEntity.COLUMN_NAME_USER_ID + " = ?&& " + FaceEntity.COLUMN_NAME_GROUP_ID + " =?";
+        String selection = FaceEntity.COLUMN_NAME_USER_ID + " = ?& " + FaceEntity.COLUMN_NAME_GROUP_ID + " =?";
         String[] selectionArgs = {String.valueOf(userId), String.valueOf(groupId)};
 
         Cursor cursor = database.query(FaceEntity.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
