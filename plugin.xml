@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-arcface" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-arcface" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>Arc Face</name>
 	<description>Cordova Face Plugin,use arcsoft face SDK</description>
 	<license>Apache 2.0</license>
@@ -74,7 +74,6 @@
 		<source-file src="libs/android/armeabi-v7a/libArcSoft_FREngine.so" target-dir="libs/armeabi-v7a"/>
 		<source-file src="libs/android/armeabi-v7a/libArcSoft_FTEngine.so" target-dir="libs/armeabi-v7a"/>
 		<source-file src="libs/android/armeabi-v7a/libmpbase.so" target-dir="libs/armeabi-v7a"/>
-
 
 	</platform>
 

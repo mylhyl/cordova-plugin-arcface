@@ -20,7 +20,7 @@ var arc_face = {
 		exec(success,error,"ArcFacePlugin","searchFace",[ref,count]);
 	},
 	registerFace : function(userId,groupId,imagePath,remark,success,error){
-		exec(success,error,"ArcFacePlugin","updateOrRegisterFace",[userId,groupId,imagePath,remark]);
+		exec(success,error,"ArcFacePlugin","registerFace",[userId,groupId,imagePath,remark]);
 	},
 	deleteFace : function(userId,success,error){
 		exec(success,error,"ArcFacePlugin","deleteFace",[userId]);

@@ -13,6 +13,7 @@
 +(instancetype)sharedInstance;
 
 //初始化引擎
+-(BOOL)initEngines;
 -(BOOL)initEnginesAppID:(NSString *)appId FTKey:(NSString *)ftKey FDKey:(NSString *)fdKey FRKey:(NSString *)frKey Error:(NSError *__autoreleasing*)error;
 //销毁引擎
 -(BOOL)dellocEngines;

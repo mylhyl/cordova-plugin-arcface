@@ -34,7 +34,7 @@
     _FR_KEY = [[plistDic objectForKey:@"ArcFacePlugin"] objectForKey:@"FR_KEY"];
     _FT_KEY = [[plistDic objectForKey:@"ArcFacePlugin"] objectForKey:@"FT_KEY"];
      //初始化插件
-    self.manager=[ArcSoftManager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:nil];
+    self.manager=[ArcSoftManager sharedInstance];
 
 }
 
@@ -68,26 +68,23 @@
         NSString *srcPath = [self pathForURL:srcPathURL];
         NSString *destDirectory = [self pathForURL:destDirectoryURL];
 
-        if (srcPath == nil || [srcPath length] == 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"srcPath is null"];
-        } else if(destDirectory == nil || [destDirectory length] == 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"destDirectory is null"];
+        //初始化引擎
+        [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:nil];
+    
+        NSError *error = nil;
+        BOOL res = [self.manager executeDataByZipFilePath:srcPath outputDirectory:destDirectory Error:&error];
+        if (!res) NSLog(@"%@",error);
+        if (res) {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
         } else {
-            //初始化引擎
-            [self.manager initEngines];
-        
-            NSError *error = nil;
-            BOOL res = [self.manager executeDataByZipFilePath:srcPath outputDirectory:destDirectory Error:&error];
-            if (!res) NSLog(@"%@",error);
-            if (res) {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
-            } else {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.userInfo[NSLocalizedDescriptionKey]];
-            }
+            NSMutableDictionary* dataError = [[NSMutableDictionary alloc] init];
+            [dataError setValue:[NSNumber numberWithInterger:error.code] forKey:@"code"];
+            [dataError setValue:error.userInfo[NSLocalizedDescriptionKey] forKey:@"message"];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dataError];
+        }
 
-            //销毁引擎
-            [self.manager dellocEngines];
-        }    
+        //销毁引擎
+        [self.manager dellocEngines];
 
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
@@ -99,25 +96,24 @@
         CDVPluginResult* pluginResult = nil;
         NSString *image = [command.arguments objectAtIndex:0];
         int count = [[command.arguments objectAtIndex:1] intValue];
-        if (image == nil || [image length] == 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"image is null"];
-        } else if (count <= 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"count must > 0"];
-        } else {
-            //初始化引擎
-            [self.manager initEngines];
 
-            NSError *error = nil;
-            BOOL res = [self.manager searchFace:image Count:count Error:&error];
-            if(!error) NSLog(@"%@",error);
-            if(res){
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
-            }else{
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.userInfo[NSLocalizedDescriptionKey]];
-            }
-            //销毁引擎
-            [self.manager dellocEngines];
+        //初始化引擎
+        [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:nil];
+
+        NSError *error = nil;
+        BOOL res = [self.manager searchFace:image Count:count Error:&error];
+        if(!error) NSLog(@"%@",error);
+        if(res){
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
+        }else{
+            NSMutableDictionary* dataError = [[NSMutableDictionary alloc] init];
+            [dataError setValue:[NSNumber numberWithInterger:error.code] forKey:@"code"];
+            [dataError setValue:error.userInfo[NSLocalizedDescriptionKey] forKey:@"message"];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dataError];
         }
+        //销毁引擎
+        [self.manager dellocEngines];
+
     }];
 }
 
@@ -129,29 +125,25 @@
         int groupId = [[command.arguments objectAtIndex:1] intValue];
         NSString *imagePath = [command.arguments objectAtIndex:2];
         NSString *remark = [command.arguments objectAtIndex:3];
-
-        if (userId <= 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"userId must > 0"];
-        } else if (groupId <= 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"groupId must > 0"];
-        } else if (imagePath == nil || [imagePath length] == 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"imagePath is null"];
+     
+        //初始化引擎
+        [self.manager initEnginesAppID:_APP_ID FTKey:_FT_KEY FDKey:_FD_KEY FRKey:_FR_KEY Error:nil];
+    
+        NSError *error = nil;
+        BOOL res = [self.manager registerFaceUserId:userId GroupId:groupId ImagePath:imagePath Remark:remark Error:&error];
+        if (res) {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
         } else {
-            //初始化引擎
-            [self.manager initEngines];
-        
-            NSError *error = nil;
-            BOOL res = [self.manager registerFaceUserId:userId GroupId:groupId ImagePath:imagePath Remark:remark Error:&error];
-            if (res) {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
-            } else {
-                NSLog(@"%@",error);
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.userInfo[NSLocalizedDescriptionKey]];
-            } 
+            NSLog(@"%@",error);
+            NSMutableDictionary* dataError = [[NSMutableDictionary alloc] init];
+            [dataError setValue:[NSNumber numberWithInterger:error.code] forKey:@"code"];
+            [dataError setValue:error.userInfo[NSLocalizedDescriptionKey] forKey:@"message"];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dataError];
+        } 
 
-            //销毁引擎
-            [self.manager dellocEngines];
-        }
+        //销毁引擎
+        [self.manager dellocEngines];
+        
     }];
 }
 

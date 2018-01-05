@@ -21,10 +21,10 @@
 
 #import <LzmaSDK_ObjC/LzmaSDKObjC.h>
 
-#define AFR_APP_ID         ""
-#define AFR_SDK_FR_KEY     ""
-#define AFR_SDK_FT_KEY     ""
-#define AFR_SDK_FD_KEY     ""
+#define AFR_APP_ID         "8wAFXwLyRJZv3FxdJAjCxC2zmGTQG6Sf62Py15AC45Nu"
+#define AFR_SDK_FR_KEY     "4uxSiocChgkwTY49NU46DkxS8fUmLrTzUyRNpsbvLMD8"
+#define AFR_SDK_FT_KEY     "4uxSiocChgkwTY49NU46DkwwV4S5L5D2iFzANVN1zxz1"
+#define AFR_SDK_FD_KEY     "4uxSiocChgkwTY49NU46Dkx4eThF5ZyN2Yfca5vNwESs"
 
 #define AFR_FR_MEM_SIZE         1024*1024*40
 #define AFR_FT_MEM_SIZE         1024*1024*5
@@ -32,23 +32,41 @@
 
 #define AFR_FD_MAX_FACE_NUM     4
 
-NSString * const _Nonnull kArcSoftManagerDomain = @"ArcSoftManager";
-NSString * const _Nonnull kArcSoftFaceSDKDomain = @"ArcSoftFaceSDK";
-NSString * const _Nonnull kArcSoftFaceSDKError =@"Calling ArcSoftSDK method error. Please check merror.h in ArcSoftSDK.";
-//初始化引擎错误
-NSString * const _Nonnull kArcSoftFaceSDKFTError = @"Init FT engine error.";
-NSString * const _Nonnull kArcSoftFaceSDKFDError = @"Init FD engine error.";
-NSString * const _Nonnull kArcSoftFaceSDKFRError = @"Init FR engine error.";
-//解压缩初始化错误
-NSString * const _Nonnull kArcSoftManagerFileNotFound = @"Decode File Not Found.";
-NSString * const _Nonnull kArcSoftManagerExtractError = @"Decoder not created. Extract Error.";
-NSString * const _Nonnull kArcSoftManagerFileFormatError = @"The file is not the specified format(.7z).";
-NSString * const _Nonnull kArcSoftManagerSqlExecuteError = @"Sql not found.";
-//查找人脸错误
-NSString * const _Nonnull kArcSoftManagerNOFaceIn = @"Failed to detect face.";
-NSString * const _Nonnull kArcSoftManagerNORegisteredFace = @"NO registered face in database.";
-NSString * const _Nonnull kArcSoftManagerRegisteredFaceError = @"Registered face failure.";
+#define MERR               @[@"MOK",@"MERR_UNKNOWN",@"MERR_INVALID_PARAM",@"MERR_UNSUPPORTED",@"MERR_NO_MEMORY",@"MERR_BAD_STATE",@"MERR_USER_CANCEL",@"MERR_EXPIRED",@"MERR_USER_PAUSE",@"MERR_BUFFER_OVERFLOW",@"MERR_BUFFER_UNDERFLOW",@"MERR_NO_DISKSPACE",@"MERR_COMPONENT_NOT_EXIST",@"MERR_GLOBAL_DATA_NOT_EXIST"]
 
+#define MERR_FSDK               @[@"MERR_FSDK_BASE",@"MERR_FSDK_INVALID_APP_ID",@"MERR_FSDK_INVALID_SDK_ID",@"MERR_FSDK_INVALID_ID_PAIR",@"MERR_FSDK_MISMATCH_ID_AND_SDK",@"MERR_FSDK_SYSTEM_VERSION_UNSUPPORTED",@"MERR_FSDK_LICENCE_EXPIRED"]
+
+#define MERR_FSDK_APS           @[@"MERR_FSDK_APS_ERROR_BASE",@"MERR_FSDK_APS_ENGINE_HANDLE",@"MERR_FSDK_APS_MEMMGR_HANDLE",@"MERR_FSDK_APS_DEVICEID_INVALID",@"MERR_FSDK_APS_DEVICEID_UNSUPPORTED",@"MERR_FSDK_APS_MODEL_HANDLE",@"MERR_FSDK_APS_MODEL_SIZE",@"MERR_FSDK_APS_IMAGE_HANDLE  ",@"MERR_FSDK_APS_IMAGE_FORMAT_UNSUPPORTED",@"MERR_FSDK_APS_IMAGE_PARAM",@"MERR_FSDK_APS_IMAGE_SIZE",@"MERR_FSDK_APS_DEVICE_AVX2_UNSUPPORTED"]
+
+#define MERR_FSDK_FR            @[@"MERR_FSDK_FR_ERROR_BASE",@"MERR_FSDK_FR_INVALID_MEMORY_INFO",@"MERR_FSDK_FR_INVALID_IMAGE_INFO",@"MERR_FSDK_FR_INVALID_FACE_INFO",@"MERR_FSDK_FR_NO_GPU_AVAILABLE",@"MERR_FSDK_FR_MISMATCHED_FEATURE_LEVEL"]
+//NSString * const _Nonnull kArcSoftManagerDomain = @"ArcSoftManager";
+//NSString * const _Nonnull kArcSoftFaceSDKDomain = @"ArcSoftFaceSDK";
+//NSString * const _Nonnull kArcSoftFaceSDKError =@"Calling ArcSoftSDK method error. Please check merror.h in ArcSoftSDK.";
+////初始化引擎错误
+//NSString * const _Nonnull kArcSoftFaceSDKFTError = @"Init FT engine error.";
+//NSString * const _Nonnull kArcSoftFaceSDKFDError = @"Init FD engine error.";
+//NSString * const _Nonnull kArcSoftFaceSDKFRError = @"Init FR engine error.";
+////解压缩初始化错误
+//NSString * const _Nonnull kArcSoftManagerFileNotFound = @"Decode File Not Found.";
+//NSString * const _Nonnull kArcSoftManagerExtractError = @"Decoder not created. Extract Error.";
+//NSString * const _Nonnull kArcSoftManagerFileFormatError = @"The file is not the specified format(.7z).";
+//NSString * const _Nonnull kArcSoftManagerSqlExecuteError = @"Sql not found.";
+////查找人脸错误
+//NSString * const _Nonnull kArcSoftManagerNOFaceIn = @"Failed to detect face.";
+//NSString * const _Nonnull kArcSoftManagerNORegisteredFace = @"NO registered face in database.";
+//NSString * const _Nonnull kArcSoftManagerRegisteredFaceError = @"Registered face failure.";
+NSString *const _Nonnull kArcSoftManagerInitEnginesDomain = @"Init engines";
+NSString *const _Nonnull kArcSoftManagerExecuteDataDomain = @"Execute Data";
+NSString *const _Nonnull kArcSoftManagerCreateFaceModelDomain = @"Create Face Model";
+NSString *const _Nonnull kArcSoftManagerSearchFaceDomain = @"Search Face";
+NSString *const _Nonnull kArcSoftManagerRegisterFaceDomain = @"Register Face";
+
+NSString *const _Nonnull kArcSoftManagerFileNotFound = @"NO_FOUND_FILE";
+NSString *const _Nonnull kArcSoftManagerExtractError = @"UNZIPPING_ERROR";
+NSString *const _Nonnull kArcSoftManagerZipFormatError = @"ZIP_FORMAT_ERROR";
+NSString *const _Nonnull kArcSoftManagerSqlExecuteError = @"SQL_EXECUTE_ERROR";
+NSString *const _Nonnull kArcSoftManagerNoFaceIn = @"NO_FACE_IN";
+NSString *const _Nonnull kArcSoftManagerNoRegisteredFace = @"NO_FACE_REGISTERED";
 
 static ArcSoftManager *manager=nil;
 
@@ -97,6 +115,46 @@ static ArcSoftManager *manager=nil;
 }
 
 //初始化引擎
+-(BOOL)initEngines
+{
+    // FT
+    _memBufferFT = MMemAlloc(MNull,AFR_FT_MEM_SIZE);
+    MMemSet(_memBufferFT, 0, AFR_FT_MEM_SIZE);
+    if(AFT_FSDK_InitialFaceEngine((MPChar)AFR_APP_ID, (MPChar)AFR_SDK_FT_KEY, (MByte*)_memBufferFT, AFR_FT_MEM_SIZE, &_arcsoftFT, AFT_FSDK_OPF_0_HIGHER_EXT, 16, AFR_FD_MAX_FACE_NUM)!=MOK) return NO;
+    // FD
+    _memBufferFD = MMemAlloc(MNull, AFR_FD_MEM_SIZE);
+    MMemSet(_memBufferFD, 0, AFR_FD_MEM_SIZE);
+    if(AFD_FSDK_InitialFaceEngine((MPChar)AFR_APP_ID, (MPChar)AFR_SDK_FD_KEY, (MByte*)_memBufferFD, AFR_FD_MEM_SIZE, &_arcsoftFD, AFD_FSDK_OPF_0_HIGHER_EXT, 16, AFR_FD_MAX_FACE_NUM)!=MOK) return NO;
+    
+    // FR
+    _memBufferFR = MMemAlloc(MNull,AFR_FR_MEM_SIZE);
+    MMemSet(_memBufferFR, 0, AFR_FR_MEM_SIZE);
+    if(AFR_FSDK_InitialEngine((MPChar)AFR_APP_ID, (MPChar)AFR_SDK_FR_KEY, (MByte*)_memBufferFR, AFR_FR_MEM_SIZE, &_arcsoftFR)!=MOK) return NO;
+    
+    _processSemaphore = dispatch_semaphore_create(1);
+    _processFRSemaphore = dispatch_semaphore_create(1);
+    
+    return YES;
+}
+
+-(NSArray *)getErrorArray:(MRESULT)res
+{
+    NSArray *arr;
+    if(res<14) arr=MERR;
+    if(res>=28672 && res<28679) arr=MERR_FSDK;
+    if(res>=69632 && res<69644) arr=MERR_FSDK_APS;
+    if(res>=73728 && res<73734) arr=MERR_FSDK_FR;
+    return arr;
+}
+
+-(MRESULT)getErrorIndex:(MRESULT)res
+{
+    if(res>=28672 && res<28679) res-=28672;
+    if(res>=69632 && res<69644) res-=69632;
+    if(res>=73728 && res<73734) res-=73728;
+    return res;
+}
+
 -(BOOL)initEnginesAppID:(NSString *)appId FTKey:(NSString *)ftKey FDKey:(NSString *)fdKey FRKey:(NSString *)frKey Error:(NSError *__autoreleasing*)error;
 {
     // FT
@@ -105,7 +163,7 @@ static ArcSoftManager *manager=nil;
     MRESULT res = AFT_FSDK_InitialFaceEngine((MPChar)[appId UTF8String], (MPChar)[ftKey UTF8String], (MByte*)_memBufferFT, AFR_FT_MEM_SIZE, &_arcsoftFT, AFT_FSDK_OPF_0_HIGHER_EXT, 16, AFR_FD_MAX_FACE_NUM);
     if(res!=MOK)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftFaceSDKDomain code:res userInfo:@{NSLocalizedDescriptionKey : kArcSoftFaceSDKFTError}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [MERR objectAtIndex:res]}];
         return NO;
     }
     // FD
@@ -114,7 +172,7 @@ static ArcSoftManager *manager=nil;
     res=AFD_FSDK_InitialFaceEngine((MPChar)[appId UTF8String], (MPChar)[fdKey UTF8String], (MByte*)_memBufferFD, AFR_FD_MEM_SIZE, &_arcsoftFD, AFD_FSDK_OPF_0_HIGHER_EXT, 16, AFR_FD_MAX_FACE_NUM);
     if(res!=MOK)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftFaceSDKDomain code:res userInfo:@{NSLocalizedDescriptionKey : kArcSoftFaceSDKFDError}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [MERR objectAtIndex:res]}];
         return NO;
     }
     // FR
@@ -123,7 +181,7 @@ static ArcSoftManager *manager=nil;
     res=AFR_FSDK_InitialEngine((MPChar)[appId UTF8String], (MPChar)[frKey UTF8String], (MByte*)_memBufferFR, AFR_FR_MEM_SIZE, &_arcsoftFR);
     if(res!=MOK)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftFaceSDKDomain code:res userInfo:@{NSLocalizedDescriptionKey : kArcSoftFaceSDKFRError}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerInitEnginesDomain code:res userInfo:@{NSLocalizedDescriptionKey : [MERR objectAtIndex:res]}];
         return NO;
     }
     
@@ -136,9 +194,14 @@ static ArcSoftManager *manager=nil;
 //销毁引擎
 -(BOOL)dellocEngines
 {
+    MRESULT res;
     if(0 == dispatch_semaphore_wait(_processSemaphore, DISPATCH_TIME_FOREVER))
     {
-        if(AFT_FSDK_UninitialFaceEngine(_arcsoftFT)!=MOK) return NO;
+        res=AFT_FSDK_UninitialFaceEngine(_arcsoftFT);
+        if(res!=MOK)
+        {
+            return NO;
+        }
         _arcsoftFT = MNull;
         if(_memBufferFT != MNull)
         {
@@ -146,7 +209,11 @@ static ArcSoftManager *manager=nil;
             _memBufferFT = MNull;
         }
         
-        if(AFD_FSDK_UninitialFaceEngine(_arcsoftFD)!=MOK) return NO;
+        res=AFD_FSDK_UninitialFaceEngine(_arcsoftFD);
+        if(res!=MOK)
+        {
+            return NO;
+        }
         _arcsoftFD = MNull;
         if(_memBufferFD != MNull)
         {
@@ -160,7 +227,11 @@ static ArcSoftManager *manager=nil;
     
     if(0 == dispatch_semaphore_wait(_processFRSemaphore, DISPATCH_TIME_FOREVER))
     {
-        if(AFR_FSDK_UninitialEngine(_arcsoftFR)!=MOK) return NO;
+        res=AFR_FSDK_UninitialEngine(_arcsoftFR);
+        if(res!=MOK)
+        {
+            return NO;
+        }
         _arcsoftFR = MNull;
         if(_memBufferFR != MNull)
         {
@@ -183,16 +254,16 @@ static ArcSoftManager *manager=nil;
     NSError *extractError=nil;
     if(![self extractDataByPath:path outputDirectory:directory Error:&extractError])
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:extractError.userInfo];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerExecuteDataDomain code:-1 userInfo:extractError.userInfo];
         isErrorExist=YES;
     }
     
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSString *sqlDirPath=[NSString stringWithFormat:@"%@arcface/sql",directory];
+    NSString *sqlDirPath=[NSString stringWithFormat:@"%@/arcface/sql",directory];
     NSArray *sqlArr=[fileManager contentsOfDirectoryAtPath:sqlDirPath error:nil];
     if(sqlArr.count==0)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerSqlExecuteError}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerExecuteDataDomain code:4 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerSqlExecuteError}];
         isErrorExist=YES;
     }
     for(NSString *sqlPath in sqlArr)
@@ -212,7 +283,7 @@ static ArcSoftManager *manager=nil;
     NSArray *arr=[DbManager getAllFaceModel];
     if(arr.count==0)
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerNORegisteredFace}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerSearchFaceDomain code:13 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerNoRegisteredFace}];
     }
     
     AFR_FSDK_FACEMODEL refModel = {0};
@@ -252,7 +323,9 @@ static ArcSoftManager *manager=nil;
         }
         else
         {
-            if(error) *error=[NSError errorWithDomain:kArcSoftFaceSDKDomain code:res userInfo:@{NSLocalizedDescriptionKey : kArcSoftFaceSDKError}];
+            NSArray *errorArr=[self getErrorArray:res];
+            MRESULT index=[self getErrorIndex:res];
+            if(error) *error=[NSError errorWithDomain:kArcSoftManagerSearchFaceDomain code:res userInfo:@{NSLocalizedDescriptionKey : [errorArr objectAtIndex:index]}];
         }
     }
     
@@ -278,7 +351,6 @@ static ArcSoftManager *manager=nil;
     }
     if(error && ![DbManager registerFaceModel:model])
     {
-        
         isErrorExist=YES;
     }
         
@@ -293,8 +365,13 @@ static ArcSoftManager *manager=nil;
     
     LPAFD_FSDK_FACERES pFaceRes = MNull;
     MRESULT res = AFD_FSDK_StillImageFaceDetection(_arcsoftFD, &offscreen, &pFaceRes);
-    if(res!=0) *error=[NSError errorWithDomain:kArcSoftFaceSDKDomain code:res userInfo:@{NSLocalizedDescriptionKey : kArcSoftFaceSDKError}];
-    if(pFaceRes->nFace==0) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerNOFaceIn}];
+    if(res!=0)
+    {
+        NSArray *errorArr=[self getErrorArray:res];
+        MRESULT errorIndex=[self getErrorIndex:res];
+        *error=[NSError errorWithDomain:kArcSoftManagerCreateFaceModelDomain code:res userInfo:@{NSLocalizedDescriptionKey : [errorArr objectAtIndex:errorIndex]}];
+    }
+    if(pFaceRes->nFace==0) *error=[NSError errorWithDomain:kArcSoftManagerCreateFaceModelDomain code:12 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerNoFaceIn}];
     
     int index = 0;
     if(pFaceRes->nFace>1)
@@ -324,7 +401,12 @@ static ArcSoftManager *manager=nil;
         featureData = [[NSData alloc] initWithBytes:FRModel.pbFeature length:FRModel.lFeatureSize];//MByte*转NSData*
         code=[featureData base64EncodedStringWithOptions:0];
     }
-    else if(res!=0) *error=[NSError errorWithDomain:kArcSoftFaceSDKDomain code:res userInfo:@{NSLocalizedDescriptionKey : kArcSoftFaceSDKError}];
+    else if(res!=0)
+    {
+        NSArray *errorArr=[self getErrorArray:res];
+        MRESULT errorIndex=[self getErrorIndex:res];
+        *error=[NSError errorWithDomain:kArcSoftManagerCreateFaceModelDomain code:res userInfo:@{NSLocalizedDescriptionKey : [errorArr objectAtIndex:errorIndex]}];
+    }
     
     FaceModel *model=[[FaceModel alloc] init];
     model.userId=userId;
@@ -365,12 +447,12 @@ static ArcSoftManager *manager=nil;
     NSFileManager *fManager=[NSFileManager defaultManager];
     if(![fManager fileExistsAtPath:path])
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey : kArcSoftManagerFileNotFound}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerExecuteDataDomain code:1 userInfo:@{ NSLocalizedDescriptionKey : kArcSoftManagerFileNotFound}];
         return NO;
     }
     if(![[path pathExtension] isEqualToString:@"7z"])
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:@{ NSLocalizedDescriptionKey : kArcSoftManagerFileFormatError}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerExecuteDataDomain code:3 userInfo:@{ NSLocalizedDescriptionKey : kArcSoftManagerZipFormatError}];
         return NO;
     }
     
@@ -378,7 +460,7 @@ static ArcSoftManager *manager=nil;
                                                                    andType:LzmaSDKObjCFileType7z];
     NSError * extractError = nil;
     if (![reader open:&extractError]) {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:extractError.userInfo];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerExecuteDataDomain code:2 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerExtractError}];
         return NO;
     }
     
@@ -393,7 +475,7 @@ static ArcSoftManager *manager=nil;
     
     if(![reader extract:items toPath:directory withFullPaths:YES])
     {
-        if(error) *error=[NSError errorWithDomain:kArcSoftManagerDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerExtractError}];
+        if(error) *error=[NSError errorWithDomain:kArcSoftManagerExecuteDataDomain code:2 userInfo:@{NSLocalizedDescriptionKey : kArcSoftManagerExtractError}];
         return NO;
     }
     return YES;
