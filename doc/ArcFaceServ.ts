@@ -146,7 +146,7 @@ export class ArcFaceServ {
 
   /**
    * 拍照注册人脸库
-   * 成功 string：图像路径
+   * 成功 string：图像base64
    * 失败 string：错误信息
    * @param userId
    * @param groupId
@@ -159,11 +159,11 @@ export class ArcFaceServ {
   ): Promise<any> {
     return new Promise((resolve, reject) => {
       this.camera
-        .getPictureUrl()
-        .then(fileUri => {
-          this.register(userId, groupId, fileUri, remark)
+        .getPicture()
+        .then(data => {
+          this.register(userId, groupId, data.toString(), remark)
             .then(res => {
-              resolve(fileUri);
+              resolve(data);
             })
             .catch(err => {
               reject(err);
@@ -181,15 +181,15 @@ export class ArcFaceServ {
    * 失败 string：错误信息
    * @param userId 用户ID
    * @param groupId 分组ID
-   * @param photoPath 图像绝对路径
+   * @param imageData 图像base64
    * @param remark 备注
    */
-  register(userId: number, groupId: number, photoPath: string, remark: string) {
+  register(userId: number, groupId: number, imageData: string, remark: string) {
     return new Promise((resolve, reject) => {
       ArcFace.registerFace(
         userId,
         groupId,
-        photoPath,
+        imageData,
         remark,
         res => {
           resolve(res);
