@@ -70,3 +70,7 @@ ArcFace.searchFace(
             err.message
         });
 ```
+
+# 二次封装
+
+[传送门](https://github.com/mylhyl/cordova-plugin-arcface/blob/master/doc/ArcFaceServ.ts)
