@@ -305,7 +305,7 @@ public class ArcFacePlugin extends CordovaPlugin {
         File sqlDirectoryFile = resourceApi.mapUriToFile(sqlDirectoryUri);
         if (sqlDirectoryFile == null || (!sqlDirectoryFile.exists() && !sqlDirectoryFile.mkdirs())) {
             String errorMessage = "SQL_EXECUTE_ERROR";
-            callbackContext.error(ErrorMessage.createErrorMessage(4,"SQL_EXECUTE_ERROR"));
+            callbackContext.error(ErrorMessage.createErrorMessage(4, "SQL_EXECUTE_ERROR"));
             return;
         }
         if (sqlDirectoryFile.isDirectory()) {
@@ -315,7 +315,7 @@ public class ArcFacePlugin extends CordovaPlugin {
                 faceDao.execute(file);
             }
         } else {
-            callbackContext.error(ErrorMessage.createErrorMessage(4,"SQL_EXECUTE_ERROR"));
+            callbackContext.error(ErrorMessage.createErrorMessage(4, "SQL_EXECUTE_ERROR"));
         }
         callbackContext.success();
     }
@@ -342,48 +342,41 @@ public class ArcFacePlugin extends CordovaPlugin {
      * 注册人脸
      *
      * @param remarks
-     * @param imagePath
+     * @param imageData
      * @param callbackContext
      */
-    private void updateOrRegisterFace(int userId, int groupId, String imagePath, String remarks, CallbackContext callbackContext) {
-        FaceDao faceDao = new FaceDao(context);
-        String image;
-        Uri fileUri = getUriForArg(imagePath);
-        CordovaResourceApi resourceApi = webView.getResourceApi();
-        File file = resourceApi.mapUriToFile(fileUri);
-        AFR_FSDKFace face = null;
-        try {
-            byte[] b = new byte[(int) file.length()];
-            FileInputStream fileInputStream = new FileInputStream(file);
-            fileInputStream.read(b, 0, (int) file.length());
-            image = Base64.encodeToString(b, Base64.NO_WRAP);
-            if (image != null && image.length() > 0) {
-                try {
-                    face = ArcFaceUtils.getFaceCode(image);
-                } catch (ArcFaceException e) {
-                    e.printStackTrace();
-                    callbackContext.error(ErrorMessage.createErrorMessage(e.getErrorCode(), e.getMessage()));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        FaceEntity faceEntity = new FaceEntity();
-        String name = FileUtil.getFileNameExceptSuffix(file);
-        faceEntity.setPicName(name);
-        faceEntity.setRemark(remarks);
-        if (face != null) {
-            faceEntity.setCode(Base64.encodeToString(face.getFeatureData(), Base64.DEFAULT));
-        }
-        faceEntity.setGroupId(groupId);
-        if (faceEntity.getCreateTime() == 0) {
-            faceEntity.setCreateTime(new Date().getTime());
+    private void updateOrRegisterFace(int userId, int groupId, String imageData, String remarks, CallbackContext callbackContext) {
+        if (userId < 0 || groupId < 0 || (imageData != null && imageData.length() > 0)) {
+            callbackContext.error(ErrorMessage.createErrorMessage(0x000b, "INVALID_PARAMETER"));
         } else {
-            faceEntity.setUpdateTime(new Date().getTime());
+            try {
+                AFR_FSDKFace face = ArcFaceUtils.getFaceCode(imageData);
+                if (face != null) {
+                    FaceDao faceDao = FaceDao.newInitialize(context.getApplicationContext());
+                    FaceEntity faceEntity = faceDao.findEntityById(userId, groupId);
+                    String name = "arcface_" + new Date().getTime() + ".jpg";
+                    faceEntity.setPicName(name);
+                    faceEntity.setRemark(remarks);
+                    faceEntity.setCode(Base64.encodeToString(face.getFeatureData(), Base64.DEFAULT));
+                    faceEntity.setGroupId(groupId);
+                    if (faceEntity.getCreateTime() == 0) {
+                        faceEntity.setCreateTime(new Date().getTime());
+                    } else {
+                        faceEntity.setUpdateTime(new Date().getTime());
+                    }
+                    faceEntity.setUserId(userId);
+                    faceDao.insertUpdateOrEntity(faceEntity);
+                    callbackContext.success();
+                } else {
+                    callbackContext.error(ErrorMessage.createErrorMessage(0x000c, "NO_FACE_IN"));
+                }
+            } catch (ArcFaceException e) {
+                e.printStackTrace();
+                callbackContext.error(ErrorMessage.createErrorMessage(e.getErrorCode(), e.getMessage()));
+            }
+
+
         }
-        faceEntity.setUserId(userId);
-        faceDao.insertUpdateOrEntity(faceEntity);
-        callbackContext.success();
     }
 
     private boolean hasReadPermission() {

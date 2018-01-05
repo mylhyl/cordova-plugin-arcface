@@ -23,5 +23,5 @@
 //查找相似人脸
 -(NSString *)searchFace:(NSString *)image Count:(int)count Error:(NSError *__autoreleasing*)error;
 //注册
--(BOOL)registerFaceUserId:(int)userId GroupId:(int)grorpId ImagePath:(NSString *)path Remark:(NSString *)remark Error:(NSError *__autoreleasing*)error;
+-(BOOL)registerFaceUserId:(int)userId GroupId:(int)grorpId ImageData:(NSString *)imageData Remark:(NSString *)remark Error:(NSError *__autoreleasing*)error;
 @end

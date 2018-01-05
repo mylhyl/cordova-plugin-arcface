@@ -341,15 +341,15 @@ static ArcSoftManager *manager=nil;
     return jsonString;
 }
 
--(BOOL)registerFaceUserId:(int)userId GroupId:(int)grorpId ImagePath:(NSString *)path Remark:(NSString *)remark Error:(NSError *__autoreleasing*)error;
+-(BOOL)registerFaceUserId:(int)userId GroupId:(int)grorpId ImageData:(NSString *)imageData Remark:(NSString *)remark Error:(NSError *__autoreleasing*)error
 {
     BOOL isErrorExist=NO;
-    UIImage *image=[UIImage imageWithContentsOfFile:path];
-    NSData *data=UIImageJPEGRepresentation(image,0);
     
-    NSString *base64Str=[data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     NSError *createFaceError=nil;
-    FaceModel *model=[self createFaceModelUserId:userId GroupId:grorpId PicName:[path stringByDeletingPathExtension] Remark:remark Image:base64Str Error:&createFaceError];
+    NSDate* date = [NSDate date];//获取当前时间0秒后的时间
+    NSTimeInterval time=[date timeIntervalSince1970];
+    NSString *picName=[NSString stringWithFormat:@"arcface_%f",time];
+    FaceModel *model=[self createFaceModelUserId:userId GroupId:grorpId PicName:picName Remark:remark Image:imageData Error:&createFaceError];
     if(error && createFaceError)
     {
         *error=[NSError errorWithDomain:createFaceError.domain code:createFaceError.code userInfo:createFaceError.userInfo];
